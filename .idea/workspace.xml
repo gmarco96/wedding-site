@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="72fac8a9-80f4-4bff-833a-6f3acfb5087f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.parcel-cache/0069b0ac7e38cb17-AssetGraph" beforeDir="false" afterPath="$PROJECT_DIR$/.parcel-cache/0069b0ac7e38cb17-AssetGraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.parcel-cache/6f504d967087550b-BundleGraph" beforeDir="false" afterPath="$PROJECT_DIR$/.parcel-cache/6f504d967087550b-BundleGraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.parcel-cache/b268cf1f67e7290d-RequestGraph" beforeDir="false" afterPath="$PROJECT_DIR$/.parcel-cache/b268cf1f67e7290d-RequestGraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.parcel-cache/c23923128c744515-AssetGraph" beforeDir="false" afterPath="$PROJECT_DIR$/.parcel-cache/c23923128c744515-AssetGraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.parcel-cache/data.mdb" beforeDir="false" afterPath="$PROJECT_DIR$/.parcel-cache/data.mdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.parcel-cache/snapshot-b268cf1f67e7290d.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.parcel-cache/snapshot-b268cf1f67e7290d.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/CIM_2.d115abf0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/agriturismo.6f800806.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/single-page.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3GG7FaDVoVzRWlnFyV5z36CPeR4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "C:/Users/marco.giollo/Desktop/Private Site/wedding-site",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.25134.101" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="72fac8a9-80f4-4bff-833a-6f3acfb5087f" name="Changes" comment="" />
+      <created>1783585948466</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1783585948466</updated>
+      <workItem from="1783585949831" duration="2596000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
