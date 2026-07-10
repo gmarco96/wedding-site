@@ -1,6 +1,11 @@
-// Wedding Game - Marco's Quest
+// Wedding Pac-Man Game - Collect All Hearts!
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+
+// Grid setup
+const GRID_SIZE = 40;
+const COLS = Math.floor(canvas.width / GRID_SIZE);
+const ROWS = Math.floor(canvas.height / GRID_SIZE);
 
 // Game variables
 let score = 0;
@@ -8,178 +13,212 @@ let lives = 3;
 let gameRunning = true;
 let gamePaused = false;
 let bestScore = localStorage.getItem('weddingGameBestScore') || 0;
-
-// Player object
-const player = {
-	x: 50,
-	y: 0,
-	width: 30,
-	height: 40,
-	velocityY: 0,
-	jumping: false,
-	jumpPower: 12,
-	color: '#2c3e50'
-};
-
-// Ground
-const ground = canvas.height - 80;
-player.y = ground;
-
-// Game objects array
-let obstacles = [];
-let hearts = [];
-let gameFrameCount = 0;
+let totalHearts = 0;
+let heartsCollected = 0;
 
 // Update best score display
 document.getElementById('bestScore').textContent = bestScore;
 
-// Bride (goal)
-const bride = {
-	x: canvas.width - 60,
-	y: ground - 10,
-	width: 40,
-	height: 50
+// Player (Marco)
+const player = {
+	gridX: 1,
+	gridY: Math.floor(ROWS / 2),
+	nextGridX: 1,
+	nextGridY: Math.floor(ROWS / 2),
+	direction: 'right',
+	nextDirection: 'right'
 };
 
-// Gravity
-const gravity = 0.5;
+// Ghosts (wedding guests chasing Marco)
+const ghosts = [
+	{ gridX: COLS - 2, gridY: 1, color: '#ff69b4', name: '👰' },      // Bride (pink)
+	{ gridX: COLS - 2, gridY: ROWS - 2, color: '#e74c3c', name: '👸' }, // Bridesmaid (red)
+	{ gridX: Math.floor(COLS / 2), gridY: 1, color: '#ffd700', name: '💐' }  // Flowers (gold)
+];
 
-// Mouse/touch controls
-document.addEventListener('click', () => {
-	if (gameRunning && !gamePaused) jump();
-});
+// Maze walls
+const walls = [];
 
-document.addEventListener('keydown', (e) => {
-	if (e.code === 'Space') {
-		e.preventDefault();
-		if (gameRunning && !gamePaused) jump();
-	}
-	if (e.code === 'KeyP') togglePause();
-});
+// Hearts to collect
+const hearts = [];
 
-// Touch support for mobile
-canvas.addEventListener('touchstart', () => {
-	if (gameRunning && !gamePaused) jump();
-});
+// Game frame count
+let gameFrameCount = 0;
 
-function jump() {
-	if (!player.jumping) {
-		player.velocityY = -player.jumpPower;
-		player.jumping = true;
-	}
-}
+// Initialize game
+function initGame() {
+	// Create maze
+	createMaze();
 
-function togglePause() {
-	if (!gameRunning) return;
-	gamePaused = !gamePaused;
-	document.getElementById('pauseBtn').textContent = gamePaused ? 'Resume' : 'Pause';
-}
+	// Place hearts
+	placeHearts();
 
-function spawnObstacle() {
-	const obstacleTypes = [
-		{ width: 40, height: 30, emoji: '🪑' }, // Chair
-		{ width: 50, height: 25, emoji: '🎂' }  // Cake
-	];
-
-	const type = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
-
-	obstacles.push({
-		x: canvas.width,
-		y: ground - type.height,
-		width: type.width,
-		height: type.height,
-		emoji: type.emoji,
-		color: '#e74c3c'
+	// Initialize ghosts
+	ghosts.forEach((ghost, index) => {
+		ghost.moveCounter = 0;
+		ghost.moveInterval = 10 + index * 5; // Different speeds
 	});
 }
 
-function spawnHeart() {
-	hearts.push({
-		x: canvas.width,
-		y: Math.random() * (ground - 100) + 50,
-		width: 20,
-		height: 20,
-		collected: false,
-		color: '#e91e63'
-	});
+function createMaze() {
+	walls.length = 0;
+
+	// Create a simple maze pattern
+	for (let x = 0; x < COLS; x++) {
+		for (let y = 0; y < ROWS; y++) {
+			// Outer walls
+			if (x === 0 || x === COLS - 1 || y === 0 || y === ROWS - 1) {
+				walls.push({ x, y });
+			}
+			// Inner wall patterns
+			else if (x % 4 === 0 && y % 3 === 0) {
+				walls.push({ x, y });
+			}
+			else if (x % 5 === 2 && y % 4 === 1) {
+				walls.push({ x, y });
+			}
+		}
+	}
+}
+
+function placeHearts() {
+	hearts.length = 0;
+	for (let x = 1; x < COLS - 1; x++) {
+		for (let y = 1; y < ROWS - 1; y++) {
+			const isWall = walls.some(w => w.x === x && w.y === y);
+			const isPlayer = player.gridX === x && player.gridY === y;
+			const isGhost = ghosts.some(g => g.gridX === x && g.gridY === y);
+
+			if (!isWall && !isPlayer && !isGhost && Math.random() > 0.7) {
+				hearts.push({ x, y, collected: false });
+			}
+		}
+	}
+	totalHearts = hearts.length;
+	heartsCollected = 0;
+}
+
+function isWall(gridX, gridY) {
+	return walls.some(w => w.x === gridX && w.y === gridY);
+}
+
+function isValidMove(gridX, gridY) {
+	if (gridX < 0 || gridX >= COLS || gridY < 0 || gridY >= ROWS) return false;
+	return !isWall(gridX, gridY);
+}
+
+function movePlayer(direction) {
+	let newX = player.gridX;
+	let newY = player.gridY;
+
+	switch(direction) {
+		case 'up': newY--; break;
+		case 'down': newY++; break;
+		case 'left': newX--; break;
+		case 'right': newX++; break;
+	}
+
+	if (isValidMove(newX, newY)) {
+		player.gridX = newX;
+		player.gridY = newY;
+		player.direction = direction;
+		return true;
+	}
+	return false;
+}
+
+function moveGhost(ghost) {
+	const directions = ['up', 'down', 'left', 'right'];
+
+	// Simple AI: move towards player
+	const dx = player.gridX - ghost.gridX;
+	const dy = player.gridY - ghost.gridY;
+
+	let bestDir = directions[Math.floor(Math.random() * directions.length)];
+	let bestDist = Math.abs(dx) + Math.abs(dy);
+
+	// Try to move towards player
+	for (let dir of directions) {
+		let newX = ghost.gridX;
+		let newY = ghost.gridY;
+
+		switch(dir) {
+			case 'up': newY--; break;
+			case 'down': newY++; break;
+			case 'left': newX--; break;
+			case 'right': newX++; break;
+		}
+
+		if (isValidMove(newX, newY)) {
+			const dist = Math.abs(player.gridX - newX) + Math.abs(player.gridY - newY);
+			if (dist < bestDist) {
+				bestDist = dist;
+				bestDir = dir;
+			}
+		}
+	}
+
+	// Move ghost
+	switch(bestDir) {
+		case 'up':
+			if (isValidMove(ghost.gridX, ghost.gridY - 1)) ghost.gridY--;
+			break;
+		case 'down':
+			if (isValidMove(ghost.gridX, ghost.gridY + 1)) ghost.gridY++;
+			break;
+		case 'left':
+			if (isValidMove(ghost.gridX - 1, ghost.gridY)) ghost.gridX--;
+			break;
+		case 'right':
+			if (isValidMove(ghost.gridX + 1, ghost.gridY)) ghost.gridX++;
+			break;
+	}
 }
 
 function update() {
 	if (gamePaused || !gameRunning) return;
 
-	// Apply gravity
-	player.velocityY += gravity;
-	player.y += player.velocityY;
-
-	// Ground collision
-	if (player.y >= ground) {
-		player.y = ground;
-		player.velocityY = 0;
-		player.jumping = false;
-	}
-
-	// Spawn obstacles
 	gameFrameCount++;
-	if (gameFrameCount % 80 === 0) {
-		spawnObstacle();
-	}
-	if (gameFrameCount % 150 === 0) {
-		spawnHeart();
-	}
 
-	// Update obstacles
-	obstacles = obstacles.filter(obs => {
-		obs.x -= 6;
-
-		// Check collision with player
-		if (
-			player.x < obs.x + obs.width &&
-			player.x + player.width > obs.x &&
-			player.y < obs.y + obs.height &&
-			player.y + player.height > obs.y
-		) {
-			lives--;
-			document.getElementById('lives').textContent = lives;
-
-			if (lives <= 0) {
-				endGame(false);
-			} else {
-				// Reset player position
-				player.x = 50;
-				player.y = ground;
-				player.velocityY = 0;
-			}
+	// Move ghosts
+	ghosts.forEach(ghost => {
+		ghost.moveCounter++;
+		if (ghost.moveCounter >= ghost.moveInterval) {
+			moveGhost(ghost);
+			ghost.moveCounter = 0;
 		}
-
-		return obs.x > -50;
 	});
 
-	// Update hearts
-	hearts = hearts.filter(heart => {
-		heart.x -= 6;
-
-		// Check collection
-		if (
-			!heart.collected &&
-			player.x < heart.x + heart.width &&
-			player.x + player.width > heart.x &&
-			player.y < heart.y + heart.height &&
-			player.y + player.height > heart.y
-		) {
+	// Check heart collection
+	hearts.forEach(heart => {
+		if (!heart.collected && player.gridX === heart.x && player.gridY === heart.y) {
 			heart.collected = true;
+			heartsCollected++;
 			score += 10;
 			document.getElementById('score').textContent = score;
 		}
-
-		return heart.x > -50;
 	});
 
-	// Check if reached bride (goal)
-	if (
-		player.x + player.width > bride.x &&
-		player.x < bride.x + bride.width &&
-		player.y + player.height > bride.y
-	) {
+	// Check ghost collision
+	const hitByGhost = ghosts.some(ghost =>
+		ghost.gridX === player.gridX && ghost.gridY === player.gridY
+	);
+
+	if (hitByGhost) {
+		lives--;
+		document.getElementById('lives').textContent = lives;
+
+		if (lives <= 0) {
+			endGame(false);
+		} else {
+			// Reset player to start
+			player.gridX = 1;
+			player.gridY = Math.floor(ROWS / 2);
+		}
+	}
+
+	// Check win condition - collect all hearts
+	if (heartsCollected === totalHearts && totalHearts > 0) {
 		endGame(true);
 	}
 }
@@ -199,14 +238,17 @@ function endGame(won) {
 	const gameOverTitle = document.getElementById('gameOverTitle');
 	const gameOverMessage = document.getElementById('gameOverMessage');
 	const gameOverScore = document.getElementById('gameOverScore');
+	const heartsInfo = document.getElementById('heartsInfo');
 
 	if (won) {
-		gameOverTitle.textContent = '💕 You Made It! 💕';
-		gameOverMessage.textContent = 'Marco reached Claudia at the altar!';
+		gameOverTitle.textContent = '💕 You Won! 💕';
+		gameOverMessage.textContent = `Collected all ${totalHearts} hearts!`;
+		heartsInfo.textContent = `Marco is ready for the wedding! 🤵👰`;
 		gameOverScore.textContent = `Final Score: ${score}`;
 	} else {
 		gameOverTitle.textContent = 'Game Over';
-		gameOverMessage.textContent = 'Marco didn\'t make it to the altar...';
+		gameOverMessage.textContent = 'The wedding guests caught up with Marco!';
+		heartsInfo.textContent = `You collected ${heartsCollected}/${totalHearts} hearts`;
 		gameOverScore.textContent = `Final Score: ${score}`;
 	}
 
@@ -215,68 +257,45 @@ function endGame(won) {
 
 function draw() {
 	// Clear canvas
-	ctx.fillStyle = 'rgba(135, 206, 235, 0.3)';
+	ctx.fillStyle = '#e8f4f8';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-	// Draw ground
-	ctx.fillStyle = '#90ee90';
-	ctx.fillRect(0, ground + 10, canvas.width, canvas.height - ground - 10);
-
-	// Draw decorative ground pattern
-	ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-	for (let i = 0; i < canvas.width; i += 40) {
-		ctx.fillRect(i, ground + 20, 20, 10);
-	}
-
-	// Draw player (Marco)
-	ctx.fillStyle = player.color;
-	ctx.fillRect(player.x, player.y, player.width, player.height);
-	// Head
-	ctx.fillStyle = '#d4a574';
-	ctx.beginPath();
-	ctx.arc(player.x + player.width / 2, player.y - 5, 8, 0, Math.PI * 2);
-	ctx.fill();
-	// Label
-	ctx.fillStyle = '#fff';
-	ctx.font = 'bold 16px Arial';
-	ctx.textAlign = 'center';
-	ctx.fillText('🤵', player.x + player.width / 2, player.y - 8);
-
-	// Draw obstacles
-	obstacles.forEach(obs => {
-		ctx.fillStyle = obs.color;
-		ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-		ctx.font = 'bold 24px Arial';
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'middle';
-		ctx.fillText(obs.emoji, obs.x + obs.width / 2, obs.y + obs.height / 2);
+	// Draw maze walls
+	ctx.fillStyle = '#2c3e50';
+	walls.forEach(wall => {
+		ctx.fillRect(wall.x * GRID_SIZE + 2, wall.y * GRID_SIZE + 2, GRID_SIZE - 4, GRID_SIZE - 4);
 	});
 
 	// Draw hearts
 	hearts.forEach(heart => {
 		if (!heart.collected) {
-			ctx.font = '20px Arial';
+			ctx.font = 'bold 24px Arial';
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'middle';
-			ctx.fillText('💕', heart.x + heart.width / 2, heart.y + heart.height / 2);
+			ctx.fillText('💕', heart.x * GRID_SIZE + GRID_SIZE / 2, heart.y * GRID_SIZE + GRID_SIZE / 2);
 		}
 	});
 
-	// Draw bride (goal)
-	ctx.font = 'bold 36px Arial';
+	// Draw player (Marco)
+	ctx.font = 'bold 32px Arial';
 	ctx.textAlign = 'center';
-	ctx.textBaseline = 'bottom';
-	ctx.fillText('👰', bride.x + bride.width / 2, bride.y + bride.height);
+	ctx.textBaseline = 'middle';
+	ctx.fillText('🤵', player.gridX * GRID_SIZE + GRID_SIZE / 2, player.gridY * GRID_SIZE + GRID_SIZE / 2);
 
-	// Draw goal line
-	ctx.strokeStyle = '#ffb6c1';
-	ctx.lineWidth = 3;
-	ctx.setLineDash([10, 10]);
-	ctx.beginPath();
-	ctx.moveTo(bride.x + bride.width / 2, bride.y - 30);
-	ctx.lineTo(bride.x + bride.width / 2, canvas.height);
-	ctx.stroke();
-	ctx.setLineDash([]);
+	// Draw ghosts
+	ghosts.forEach(ghost => {
+		ctx.font = 'bold 28px Arial';
+		ctx.textAlign = 'center';
+		ctx.textBaseline = 'middle';
+		ctx.fillText(ghost.name, ghost.gridX * GRID_SIZE + GRID_SIZE / 2, ghost.gridY * GRID_SIZE + GRID_SIZE / 2);
+	});
+
+	// Draw hearts collected indicator
+	ctx.fillStyle = '#333';
+	ctx.font = 'bold 14px Arial';
+	ctx.textAlign = 'left';
+	ctx.textBaseline = 'top';
+	ctx.fillText(`Hearts: ${heartsCollected}/${totalHearts}`, 10, canvas.height - 20);
 
 	// Draw pause overlay
 	if (gamePaused) {
@@ -296,6 +315,70 @@ function gameLoop() {
 	requestAnimationFrame(gameLoop);
 }
 
+function togglePause() {
+	if (!gameRunning) return;
+	gamePaused = !gamePaused;
+	document.getElementById('pauseBtn').textContent = gamePaused ? 'Resume' : 'Pause';
+}
+
+// Keyboard controls
+document.addEventListener('keydown', (e) => {
+	if (!gameRunning || gamePaused) return;
+
+	switch(e.code) {
+		case 'ArrowUp':
+		case 'KeyW':
+			e.preventDefault();
+			movePlayer('up');
+			break;
+		case 'ArrowDown':
+		case 'KeyS':
+			e.preventDefault();
+			movePlayer('down');
+			break;
+		case 'ArrowLeft':
+		case 'KeyA':
+			e.preventDefault();
+			movePlayer('left');
+			break;
+		case 'ArrowRight':
+		case 'KeyD':
+			e.preventDefault();
+			movePlayer('right');
+			break;
+		case 'KeyP':
+			togglePause();
+			break;
+	}
+});
+
+// Mobile touch controls
+let touchStartX = 0;
+let touchStartY = 0;
+
+canvas.addEventListener('touchstart', (e) => {
+	touchStartX = e.touches[0].clientX;
+	touchStartY = e.touches[0].clientY;
+});
+
+canvas.addEventListener('touchend', (e) => {
+	if (!gameRunning || gamePaused) return;
+
+	const touchEndX = e.changedTouches[0].clientX;
+	const touchEndY = e.changedTouches[0].clientY;
+
+	const deltaX = touchEndX - touchStartX;
+	const deltaY = touchEndY - touchStartY;
+
+	if (Math.abs(deltaX) > Math.abs(deltaY)) {
+		if (deltaX > 0) movePlayer('right');
+		else movePlayer('left');
+	} else {
+		if (deltaY > 0) movePlayer('down');
+		else movePlayer('up');
+	}
+});
+
 // Button controls
 document.getElementById('restartBtn').addEventListener('click', () => {
 	location.reload();
@@ -303,5 +386,6 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 
 document.getElementById('pauseBtn').addEventListener('click', togglePause);
 
-// Start game loop
+// Initialize and start game loop
+initGame();
 gameLoop();

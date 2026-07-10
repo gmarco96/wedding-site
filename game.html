@@ -183,8 +183,8 @@
 			<div class="inner">
 				<div class="game-container">
 					<div class="game-header">
-						<h1>💕 Marco's Quest 💕</h1>
-						<p>Help Marco reach Claudia at the altar!</p>
+						<h1>🤵 Wedding Pac-Man 👰</h1>
+						<p>Collect all hearts while avoiding the wedding guests!</p>
 					</div>
 
 					<canvas id="gameCanvas" width="760" height="400"></canvas>
@@ -205,9 +205,9 @@
 					</div>
 
 					<div class="controls">
-						<p><strong>📱 Click or Tap</strong> to make Marco jump</p>
-						<p><strong>⌨️ Spacebar</strong> also works</p>
-						<p>💕 Collect hearts for points • 🌸 Avoid obstacles • 💒 Reach the altar!</p>
+						<p><strong>⬅️ ➡️ ⬆️ ⬇️ Arrow Keys</strong> or <strong>WASD</strong> to move</p>
+						<p><strong>📱 Swipe</strong> on mobile to move Marco</p>
+						<p>💕 Collect ALL hearts • 👰 Avoid the wedding guests • 🤵 Survive and win!</p>
 						<div class="button-group">
 							<button class="game-button" id="restartBtn">Restart Game</button>
 							<button class="game-button" id="pauseBtn">Pause</button>
@@ -222,8 +222,9 @@
 
 	<div class="game-over" id="gameOverScreen">
 		<h2 id="gameOverTitle">Game Over!</h2>
-		<p id="gameOverMessage">You reached the altar!</p>
+		<p id="gameOverMessage">Marco escaped with the hearts!</p>
 		<div class="score" id="gameOverScore">Score: 0</div>
+		<p id="heartsInfo" style="font-size: 1em; color: #21b2a6; margin: 1em 0;"></p>
 		<button class="game-button" onclick="location.reload()">Play Again</button>
 		<button class="game-button" onclick="window.location.href='index.html'">Back to Wedding</button>
 	</div>
