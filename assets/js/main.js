@@ -85,4 +85,35 @@
 		}
 
 	
+	// RSVP Modal.
+		var $modal = $('#rsvp-modal'),
+			$modalForm = $modal.find('.modal-form');
+
+		function openModal() {
+			// Load the form lazily, only on first open.
+			if (!$modalForm.attr('src'))
+				$modalForm.attr('src', $modalForm.data('src'));
+
+			$modal.addClass('is-visible').attr('aria-hidden', 'false');
+			$body.addClass('modal-open');
+			$modal.find('.modal-close').trigger('focus');
+		}
+
+		function closeModal() {
+			$modal.removeClass('is-visible').attr('aria-hidden', 'true');
+			$body.removeClass('modal-open');
+		}
+
+		$('.open-modal').on('click', function(event) {
+			event.preventDefault();
+			openModal();
+		});
+
+		$modal.on('click', '[data-close-modal]', closeModal);
+
+		$window.on('keydown', function(event) {
+			if (event.key === 'Escape' && $modal.hasClass('is-visible'))
+				closeModal();
+		});
+
 })(jQuery);
