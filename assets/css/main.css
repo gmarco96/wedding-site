@@ -4303,6 +4303,7 @@ body.is-mobile.landing #footer {
 	position: relative;
 	width: 100%; 
 	max-width: 800px; 
+	height: auto;
 	margin: auto;
 	overflow: hidden;
 	/* Hides the images not in view */
@@ -4323,6 +4324,9 @@ body.is-mobile.landing #footer {
 .slide-item img {
 	width: 100%;
 	display: block;
+	/* Crop every slide to the same 3:2 frame so galleries keep a constant height */
+	aspect-ratio: 3 / 2;
+	object-fit: cover;
 }
 
 /* Positioning Buttons */
