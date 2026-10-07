@@ -1,0 +1,4 @@
+# Publish only the site files (not node_modules, docs, IDE config...)
+[build]
+  command = "mkdir -p public && cp -r index.html generic.html elements.html assets images public/"
+  publish = "public"
