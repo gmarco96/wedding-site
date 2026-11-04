@@ -4333,6 +4333,40 @@ body.is-mobile.landing #footer {
 	transition: none; /* follow the finger/mouse without lag */
 }
 
+/* Dot indicators over the bottom of the carousel images */
+.slider .dots {
+	position: absolute;
+	left: 50%;
+	bottom: 0.9em;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 0.5em;
+	z-index: 2;
+}
+
+.slider .dot {
+	width: 10px;
+	height: 10px;
+	min-width: 0;
+	padding: 0;
+	line-height: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5) !important;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.slider .dot:hover {
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.slider .dot.is-active {
+	background: #fff;
+	transform: scale(1.25);
+}
+
 .slide-item {
 	min-width: 100%;
 	/* Ensures each slide takes up the full container width */
