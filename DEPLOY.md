@@ -1,34 +1,40 @@
 # Pubblicazione del sito
 
-Il sito è completamente statico (HTML/CSS/JS), quindi l'hosting è **gratuito** su Netlify.
-L'unico costo è il dominio `.it`: circa 5–10 € l'anno (non esistono `.it` gratuiti).
+Il sito è completamente statico (HTML/CSS/JS), quindi l'hosting su **GitHub Pages** è **gratuito**.
+L'unico costo è il dominio `.it` (facoltativo): circa 5–10 € l'anno (non esistono `.it` gratuiti).
 
-## 1. Hosting gratuito su Netlify
+La pubblicazione avviene tramite GitHub Actions (`.github/workflows/pages.yml`): a ogni `git push`
+su `main` vengono pubblicati solo `index.html`, `assets/` e `images/`.
 
-1. Accedi a <https://app.netlify.com> con l'account GitHub.
-2. **Add new site → Import an existing project → GitHub** → scegli `gmarco96/wedding-site`.
-3. Lascia le impostazioni lette da `netlify.toml` (build command e cartella `public`) → **Deploy**.
-4. Il sito è online su `https://<nome>.netlify.app`. Ogni `git push` su `main` lo ripubblica.
+## 1. Attivare GitHub Pages (una volta sola)
 
-## 2. Dominio `.it`
+1. Con il piano GitHub gratuito il repository deve essere **pubblico**:
+   **Settings → General → Danger Zone → Change visibility → Public**.
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. Fai un push su `main` (oppure **Actions → Deploy to GitHub Pages → Run workflow**).
+4. Quando il workflow è verde, il sito è online su <https://gmarco96.github.io/wedding-site/>.
+
+## 2. Dominio `.it` (facoltativo)
 
 Nomi liberi al 30/10/2026 (verificati su whois.nic.it):
 `claudiamarco.it`, `claudiaemarco2027.it`, `claudiaemarcosposi.it`, `matrimonioclaudiamarco.it`
 (`claudiaemarco.it` è già registrato).
 
 1. Registra il dominio presso un registrar che permette di modificare i DNS
-   (es. Register.it, Aruba, OVH, Regery, Cloudean).
-2. Su Netlify: **Site configuration → Domain management → Add a domain** → inserisci il dominio.
-3. Nel pannello DNS del registrar crea questi record:
+   (es. Register.it, Aruba, OVH).
+2. Nel pannello DNS del registrar crea questi record:
 
-   | Tipo  | Nome  | Valore                     |
-   |-------|-------|----------------------------|
-   | A     | `@`   | `75.2.60.5`                |
-   | CNAME | `www` | `<nome>.netlify.app`       |
+   | Tipo  | Nome  | Valore               |
+   |-------|-------|----------------------|
+   | A     | `@`   | `185.199.108.153`    |
+   | A     | `@`   | `185.199.109.153`    |
+   | A     | `@`   | `185.199.110.153`    |
+   | A     | `@`   | `185.199.111.153`    |
+   | CNAME | `www` | `gmarco96.github.io` |
 
-   In alternativa usa i nameserver Netlify (Netlify DNS, gratuito) indicati nel pannello.
-4. Dopo la propagazione DNS (da pochi minuti a qualche ora), Netlify attiva da solo il
-   certificato HTTPS gratuito (Let's Encrypt).
+3. Su GitHub: **Settings → Pages → Custom domain** → inserisci il dominio → **Save**.
+4. Dopo la propagazione DNS (da pochi minuti a qualche ora) spunta **Enforce HTTPS**
+   (certificato gratuito emesso da GitHub).
 
 ## Test in locale
 
