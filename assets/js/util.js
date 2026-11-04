@@ -14,9 +14,31 @@ const Utils = {
 
 		let currentIndex = 0;
 
+		// Dot indicators over the bottom of the images, one per slide (clickable).
+		const dotsWrap = document.createElement('div');
+		dotsWrap.className = 'dots';
+		const dots = Array.from(slides, (_, i) => {
+			const dot = document.createElement('button');
+			dot.type = 'button';
+			dot.className = 'dot';
+			dot.setAttribute('aria-label', `Foto ${i + 1} di ${slides.length}`);
+			dot.addEventListener('click', () => {
+				currentIndex = i;
+				updatePosition();
+			});
+			dotsWrap.appendChild(dot);
+			return dot;
+		});
+		container.appendChild(dotsWrap);
+
 		const updatePosition = () => {
 			track.style.transform = `translateX(-${currentIndex * 100}%)`;
+			dots.forEach((dot, i) => {
+				dot.classList.toggle('is-active', i === currentIndex);
+				dot.setAttribute('aria-current', i === currentIndex ? 'true' : 'false');
+			});
 		};
+		updatePosition();
 
 		const goToNext = () => {
 			currentIndex = (currentIndex + 1) % slides.length;
@@ -41,7 +63,7 @@ const Utils = {
 		container.addEventListener('dragstart', (e) => e.preventDefault());
 
 		container.addEventListener('pointerdown', (e) => {
-			if (e.target.closest('.prev, .next')) return;
+			if (e.target.closest('.prev, .next, .dots')) return;
 			if (e.pointerType === 'mouse' && e.button !== 0) return;
 			pointerId = e.pointerId;
 			startX = e.clientX;
