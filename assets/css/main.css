@@ -4308,12 +4308,24 @@ body.is-mobile.landing #footer {
 	overflow: hidden;
 	/* Hides the images not in view */
 	/* border-radius: 8px; */
+	touch-action: pan-y; /* horizontal swipes go to the carousel, vertical ones scroll the page */
+	cursor: grab;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.slider.is-dragging {
+	cursor: grabbing;
 }
 
 .slides {
 	display: flex;
 	transition: transform 0.5s ease-in-out;
 	/* Smooth sliding effect */
+}
+
+.slider.is-dragging .slides {
+	transition: none; /* follow the finger/mouse without lag */
 }
 
 .slide-item {

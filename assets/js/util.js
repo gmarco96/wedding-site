@@ -59,6 +59,65 @@ const Utils = {
 		nextBtn.addEventListener('click', goToNext);
 		prevBtn.addEventListener('click', goToPrev);
 
+		// Swipe (touch) and drag (mouse/pen): the track follows the pointer,
+		// then snaps to the next/previous slide or back to the current one.
+		const SWIPE_RATIO = 0.2;    // fraction of the width that changes slide
+		const FLICK_SPEED = 0.4;    // px/ms: a quick flick changes slide even if short
+		let startX = 0, startY = 0, startTime = 0, deltaX = 0;
+		let pointerId = null, dragging = false;
+
+		container.addEventListener('dragstart', (e) => e.preventDefault());
+
+		container.addEventListener('pointerdown', (e) => {
+			if (e.target.closest('.prev, .next')) return;
+			if (e.pointerType === 'mouse' && e.button !== 0) return;
+			pointerId = e.pointerId;
+			startX = e.clientX;
+			startY = e.clientY;
+			startTime = performance.now();
+			deltaX = 0;
+			dragging = false;
+		});
+
+		container.addEventListener('pointermove', (e) => {
+			if (e.pointerId !== pointerId) return;
+			const dx = e.clientX - startX;
+			const dy = e.clientY - startY;
+
+			if (!dragging) {
+				// Wait for a clear horizontal movement; vertical means page scroll.
+				if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+				if (Math.abs(dy) > Math.abs(dx)) { pointerId = null; return; }
+				dragging = true;
+				container.setPointerCapture(e.pointerId);
+				container.classList.add('is-dragging');
+			}
+
+			deltaX = dx;
+			// Resist dragging past the first/last slide.
+			const atEdge = (currentIndex === 0 && dx > 0) || (currentIndex === slides.length - 1 && dx < 0);
+			const offset = atEdge ? dx / 3 : dx;
+			track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${offset}px))`;
+		});
+
+		const endDrag = (e) => {
+			if (e.pointerId !== pointerId) return;
+			pointerId = null;
+			if (!dragging) return;
+			dragging = false;
+			container.classList.remove('is-dragging');
+
+			const speed = Math.abs(deltaX) / Math.max(performance.now() - startTime, 1);
+			const passed = Math.abs(deltaX) > container.offsetWidth * SWIPE_RATIO || speed > FLICK_SPEED;
+
+			if (passed && deltaX < 0 && currentIndex < slides.length - 1) currentIndex++;
+			else if (passed && deltaX > 0 && currentIndex > 0) currentIndex--;
+			updatePosition();
+		};
+
+		container.addEventListener('pointerup', endDrag);
+		container.addEventListener('pointercancel', endDrag);
+
 		if (enableAutoStart) {
 			setInterval(goToNext, 5000);
 		}
