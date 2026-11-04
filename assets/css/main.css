@@ -4451,7 +4451,7 @@ body.modal-open {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 20em;
+	aspect-ratio: 3 / 2; /* same frame as the photo sliders */
 	background: linear-gradient(135deg, #2e3842 0%, #21b2a6 100%);
 }
 
