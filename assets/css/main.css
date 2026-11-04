@@ -3792,6 +3792,18 @@ body.is-menu-visible #menu {
 #banner p {
 	letter-spacing: 0.225em;
 	text-transform: uppercase;
+	/* Wedding date: large and bold so it stands out on the photo */
+	color: #fff;
+	font-size: 1.75em;
+	font-weight: 800;
+	margin-top: 0.75em;
+	text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+@media screen and (max-width: 736px) {
+	#banner p {
+		font-size: 1.25em;
+	}
 }
 
 #banner p a {
