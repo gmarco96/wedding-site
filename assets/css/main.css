@@ -3743,13 +3743,6 @@ body.is-menu-visible #menu {
 	text-align: center;
 }
 
-#banner .countdown {
-	font-size: 2rem;
-	/*font-weight: bold;*/
-	color: goldenrod;
-	margin: 0 0 1em 0;
-}
-
 
 #banner h2 {
 	-moz-transform: scale(1);
@@ -3799,6 +3792,18 @@ body.is-menu-visible #menu {
 #banner p {
 	letter-spacing: 0.225em;
 	text-transform: uppercase;
+	/* Wedding date: large and bold so it stands out on the photo */
+	color: #fff;
+	font-size: 1.75em;
+	font-weight: 800;
+	margin-top: 0.75em;
+	text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+@media screen and (max-width: 736px) {
+	#banner p {
+		font-size: 1.25em;
+	}
 }
 
 #banner p a {
@@ -4501,5 +4506,23 @@ blockquote.song-quote cite {
 @media screen and (max-width: 736px) {
 	blockquote.song-quote p {
 		font-size: 1.5em;
+	}
+}
+
+/* "Apri la mappa" in the bottom-right corner of the info cards */
+.features li.has-map-link {
+	padding-bottom: 4em;
+}
+
+.features li .map-link {
+	position: absolute;
+	right: 2em;
+	bottom: 1.5em;
+	font-size: 0.8em;
+}
+
+@media screen and (max-width: 480px) {
+	.features li .map-link {
+		right: 0;
 	}
 }
