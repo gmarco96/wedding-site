@@ -1,34 +1,6 @@
 'use strict';
 
-let timerInterval = null;
-
 const Utils = {
-	countDown: (date) => {
-		const now = new Date().getTime();
-		const countDownDate = new Date(date).getTime();
-		const distance = countDownDate - now;
-
-		if (distance < 0) {
-			return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-		}
-
-		return {
-			days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-			hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-			minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-			seconds: Math.floor((distance % (1000 * 60)) / 1000)
-		};
-	},
-	initCountDown: (endDate) => {
-		timerInterval = setInterval(function () {
-			const countDown = Utils.countDown(endDate);
-			$('.days').text(String(countDown.days).padStart(2, '0'));
-			$('.hours').text(String(countDown.hours).padStart(2, '0'));
-			$('.minutes').text(String(countDown.minutes).padStart(2, '0'));
-			$('.seconds').text(String(countDown.seconds).padStart(2, '0'));
-		}, 1000);
-	},
-
 	initSlideShow: (selector, enableAutoStart = false) => {
 		const container = document.querySelector(selector);
 		if (!container) return;
@@ -120,13 +92,6 @@ const Utils = {
 
 		if (enableAutoStart) {
 			setInterval(goToNext, 5000);
-		}
-	},
-
-	clearCountDown: () => {
-		if (timerInterval) {
-			clearInterval(timerInterval);
-			timerInterval = null;
 		}
 	},
 

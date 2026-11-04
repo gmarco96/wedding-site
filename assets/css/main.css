@@ -3743,13 +3743,6 @@ body.is-menu-visible #menu {
 	text-align: center;
 }
 
-#banner .countdown {
-	font-size: 2rem;
-	/*font-weight: bold;*/
-	color: goldenrod;
-	margin: 0 0 1em 0;
-}
-
 
 #banner h2 {
 	-moz-transform: scale(1);

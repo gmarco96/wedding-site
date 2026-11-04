@@ -23,8 +23,6 @@
 
 	// Play initial animations on page load.
 		$window.on('load', function() {
-			const weddingDate = new Date('June 5, 2027 00:00:00').getTime();
-			Utils.initCountDown(weddingDate);
 			Utils.initSlideShow('#gallery-one');
 			Utils.initSlideShow('#gallery-two');
 			window.setTimeout(function() {
