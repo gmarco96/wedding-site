@@ -4445,3 +4445,17 @@ body.modal-open {
 		padding-left: 0;
 	}
 }
+
+/* Viaggio di nozze: icon panel in place of a photo */
+.spotlight .image.trip-image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 20em;
+	background: linear-gradient(135deg, #2e3842 0%, #21b2a6 100%);
+}
+
+.spotlight .image.trip-image .icon:before {
+	font-size: 6em;
+	color: rgba(255, 255, 255, 0.85);
+}
