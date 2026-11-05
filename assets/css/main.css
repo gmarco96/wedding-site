@@ -3835,8 +3835,10 @@ body.is-menu-visible #menu {
 @media screen and (max-width: 736px) {
 
 	#banner {
-		padding: 7em 3em 5em 3em;
-		height: auto;
+		/* Full-screen hero on mobile too (svh avoids the jump from the browser toolbar) */
+		padding: 3em 1.5em;
+		height: 100vh;
+		height: 100svh;
 		min-height: 0;
 	}
 
