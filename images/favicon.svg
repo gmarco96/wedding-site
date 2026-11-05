@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+	<!-- Two interlocked wedding rings with a small diamond -->
+	<g fill="none" stroke-width="3.5">
+		<circle cx="12" cy="19" r="8" stroke="#e0b84a"/>
+		<circle cx="20" cy="19" r="8" stroke="#b8862a"/>
+		<!-- left ring passes over the right one at the top crossing -->
+		<path d="M13.39 11.12 A8 8 0 0 1 18.13 13.86" stroke="#e0b84a"/>
+	</g>
+	<path d="M9 5.2 L10.6 3 L13.4 3 L15 5.2 L12 9 Z" fill="#bfe9f2" stroke="#7cc3d6" stroke-width="0.6" stroke-linejoin="round"/>
+</svg>
