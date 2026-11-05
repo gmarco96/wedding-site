@@ -22,12 +22,14 @@
 		});
 
 	// Play initial animations on page load.
-		$window.on('load', function() {
+		// Start the intro animation as soon as the DOM is ready instead of
+		// waiting for every image/font to finish loading (window "load").
+		$(function() {
 			Utils.initSlideShow('#gallery-one');
 			Utils.initSlideShow('#gallery-two');
 			window.setTimeout(function() {
 				$body.removeClass('is-preload');
-			}, 100);
+			}, 50);
 		});
 
 	// Mobile?
