@@ -83,6 +83,16 @@
 		}
 
 	
+	// Add to calendar: Android gets the Google Calendar link (it handles .ics files poorly),
+	// everyone else keeps the default .ics file (iPhone, Mac, Outlook...).
+		if (/Android/i.test(navigator.userAgent))
+			$('.add-to-calendar').each(function() {
+				$(this)
+					.attr('href', $(this).data('google'))
+					.attr({ target: '_blank', rel: 'noopener' })
+					.removeAttr('type');
+			});
+
 	// RSVP Modal.
 		var $modal = $('#rsvp-modal'),
 			$modalForm = $modal.find('.modal-form');

@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Claudia e Marco//Matrimonio//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:matrimonio-claudia-marco-20270605@gmarco96.github.io
+DTSTAMP:20261105T000000Z
+DTSTART;VALUE=DATE:20270605
+DTEND;VALUE=DATE:20270606
+SUMMARY:Matrimonio Claudia & Marco
+LOCATION:Chiesa del Cuore Immacolato di Maria\, Vicenza
+DESCRIPTION:Cerimonia alla Chiesa del Cuore Immacolato di Maria (Vicenza)\,
+  poi festa all'Agriturismo "Il Grande Portico" (Costabissara). Gli orari p
+ recisi verranno comunicati più avanti.\nhttps://gmarco96.github.io/weddin
+ g-site/
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
