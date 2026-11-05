@@ -115,29 +115,6 @@ const Utils = {
 		if (enableAutoStart) {
 			setInterval(goToNext, 5000);
 		}
-	},
-
-	prioritize: (elements, condition) => {
-		const nodes = typeof elements === 'string' ? document.querySelectorAll(elements) : elements;
-		const key = '__prioritize_ref';
-
-		nodes.forEach(el => {
-			const parent = el.parentElement;
-			if (!parent) return;
-
-			if (!el[key]) {
-				if (!condition) return;
-				const prev = el.previousElementSibling;
-				if (!prev) return;
-
-				el[key] = prev;
-				parent.prepend(el);
-			} else {
-				if (condition) return;
-				el[key].after(el);
-				delete el[key];
-			}
-		});
 	}
 };
 
