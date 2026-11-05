@@ -124,4 +124,41 @@
 				closeModal();
 		});
 
+	// Easter egg: a heart and a countdown for whoever opens DevTools.
+		(function() {
+			if (!window.console || !console.log)
+				return;
+
+			var today = new Date(),
+				start = new Date(today.getFullYear(), today.getMonth(), today.getDate()),
+				wedding = new Date(2027, 5, 5),
+				days = Math.round((wedding - start) / 86400000),
+				countdown;
+
+			if (days > 1)
+				countdown = 'Mancano ' + days + ' giorni al 5 giugno 2027!';
+			else if (days === 1)
+				countdown = 'Manca 1 giorno: domani ci sposiamo!';
+			else if (days === 0)
+				countdown = 'È OGGI! Che ci fai qui? Corri alla festa!';
+			else
+				countdown = 'Sposati da ' + (-days) + ' giorni. Grazie per aver festeggiato con noi!';
+
+			var heart = [
+				'   ****     ****   ',
+				' ******** ******** ',
+				'*******************',
+				' ***************** ',
+				'   *************   ',
+				'     *********     ',
+				'       *****       ',
+				'         *         '
+			].join('\n');
+
+			console.log('%c' + heart, 'color: #e25d6a; font-family: monospace; font-size: 14px; line-height: 1.1;');
+			console.log('%cClaudia & Marco', 'color: #e25d6a; font-size: 20px; font-weight: bold;');
+			console.log('%c' + countdown, 'font-size: 14px; font-weight: bold;');
+			console.log('%cSei curioso come Marco. Ci vediamo alla festa! 💛', 'font-size: 13px; font-style: italic;');
+		})();
+
 })(jQuery);
