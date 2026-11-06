@@ -4193,8 +4193,9 @@ body.is-mobile.landing #footer {
 .slide-item img {
 	width: 100%;
 	display: block;
-	/* Crop every slide to the same 3:2 frame so galleries keep a constant height */
-	aspect-ratio: 3 / 2;
+	/* Crop every slide to the same frame as the single couple photo (Claudia_Marco.jpg, 1600x1205)
+	   so carousels and the single image are the same height and galleries keep a constant height */
+	aspect-ratio: 1600 / 1205;
 	object-fit: cover;
 }
 
@@ -4378,3 +4379,51 @@ blockquote.song-quote cite {
 		right: 0;
 	}
 }
+
+/* ==========================================================================
+   Nordic calm palette
+   #1b2a41 navy · #324a5f steel blue · #7a9cb8 blue · #ccd6e0 gray-blue · #f4f6f8 off-white
+   Overrides the template colors above.
+   ========================================================================== */
+
+body, #page-wrapper { background: #ffffff !important; color: #324a5f !important; }
+
+/* Light sections (default) */
+.wrapper.style1, .wrapper.style2, .wrapper.style3, #cta { background: #ffffff !important; color: #324a5f !important; }
+.wrapper p, .wrapper li, .wrapper header p, .wrapper cite, .wrapper small, #footer li { color: #324a5f !important; }
+.wrapper h1, .wrapper h2, .wrapper h3, .wrapper h4, .wrapper strong, .wrapper b, .wrapper em { color: #1b2a41 !important; }
+.wrapper header.major h2, .wrapper header.major p, .wrapper blockquote, .wrapper hr { border-color: #7a9cb8 !important; }
+.wrapper a { color: #324a5f !important; border-bottom-color: #ccd6e0 !important; }
+.wrapper a:hover { border-bottom-color: transparent !important; }
+.wrapper .button { box-shadow: inset 0 0 0 2px #ccd6e0 !important; color: #1b2a41 !important; background: transparent !important; }
+.wrapper .button:hover { background: rgba(0, 0, 0, 0.04) !important; }
+.wrapper .button.primary { background: #324a5f !important; color: #ffffff !important; box-shadow: none !important; }
+.wrapper .button.primary:hover { filter: brightness(1.12); }
+.slider .prev, .slider .next { color: #ffffff !important; }
+
+/* Quote (#one) and Informazioni utili (#three): navy */
+#one, #three { background: #1b2a41 !important; color: #ccd6e0 !important; }
+#one p, #one cite, #three p, #three li { color: #ccd6e0 !important; }
+#one h2, #one h3, #one strong, #one em, #one .song-quote p,
+#three h2, #three h3, #three strong, #three em { color: #f4f6f8 !important; }
+#one cite em { color: #ccd6e0 !important; }
+#one blockquote, #three header.major h2 { border-color: #7a9cb8 !important; }
+#three .features li { background: #233552 !important; border: 1px solid #324a5f; }
+#three .features li:before { color: #7a9cb8 !important; }
+#three a { color: #ccd6e0 !important; border-bottom-color: #324a5f !important; }
+#three a:hover { color: #ffffff !important; }
+
+/* Ceremony, party, RSVP and honeymoon boxes (#two): steel blue */
+#two .spotlight { background: #324a5f !important; }
+#two .spotlight p, #two .spotlight small { color: #ccd6e0 !important; }
+#two .spotlight h2, #two .spotlight strong, #two .spotlight em { color: #f4f6f8 !important; }
+#two .spotlight a:not(.button) { color: #ccd6e0 !important; border-bottom-color: #7a9cb8 !important; }
+#two .spotlight a:not(.button):hover { color: #ffffff !important; }
+#two .spotlight .button.primary { background: #f4f6f8 !important; color: #1b2a41 !important; }
+#two .trip-image { background: #3e5870 !important; }
+#two .trip-image .icon, #two .trip-image .icon:before { color: #ccd6e0 !important; }
+
+/* Footer: navy */
+#footer { background: #1b2a41 !important; }
+#footer li { color: #ccd6e0 !important; }
+#footer .icon, #footer .icon:before { color: #7a9cb8 !important; }
