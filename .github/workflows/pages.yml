@@ -27,7 +27,7 @@ jobs:
       - name: Stage site files
         run: |
           mkdir _site
-          cp -r index.html assets images _site/
+          cp -r index.html matrimonio-claudia-marco.ics assets images _site/
 
       - uses: actions/configure-pages@v5
 
