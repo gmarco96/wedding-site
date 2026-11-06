@@ -4193,9 +4193,8 @@ body.is-mobile.landing #footer {
 .slide-item img {
 	width: 100%;
 	display: block;
-	/* Crop every slide to the same frame as the single couple photo (Claudia_Marco.jpg, 1600x1205)
-	   so carousels and the single image are the same height and galleries keep a constant height */
-	aspect-ratio: 1600 / 1205;
+	/* Crop every slide to the same 3:2 frame so galleries keep a constant height */
+	aspect-ratio: 3 / 2;
 	object-fit: cover;
 }
 
@@ -4428,3 +4427,9 @@ body, #page-wrapper { background-color: #ffffff !important; color: #324a5f !impo
 #footer { background: #1b2a41 !important; }
 #footer li { color: #ccd6e0 !important; }
 #footer .icon, #footer .icon:before { color: #7a9cb8 !important; }
+
+/* Desktop: images take exactly half the width so the corners of alternating sections touch */
+@media screen and (min-width: 981px) {
+	.spotlight .image { width: 50%; }
+	.spotlight .content { width: 50%; }
+}
