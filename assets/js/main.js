@@ -163,4 +163,17 @@
 			console.log('%cSei curioso come Marco. Ci vediamo alla festa! 💛', 'font-size: 13px; font-style: italic;');
 		})();
 
+		// Shared photo album: from the wedding day (5 June 2027, local time) show the upload button
+		// instead of the "coming soon" line. Add ?album=1 to the URL to preview it earlier.
+		(function() {
+			var section = document.getElementById('photos');
+			if (!section) return;
+
+			var open = new Date() >= new Date(2027, 5, 5) || /[?&]album=1(&|$)/.test(location.search);
+			if (!open) return;
+
+			section.querySelector('.photos-actions').hidden = false;
+			section.querySelector('.photos-soon').hidden = true;
+		})();
+
 })(jQuery);
