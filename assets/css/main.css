@@ -4084,7 +4084,8 @@ body.landing #page-wrapper {
 	background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../images/banner.jpg");
 	background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../images/banner.jpg");
 	background-attachment: fixed;
-	background-position: center center;
+	/* Anchor to the bottom so the couple (bottom of the Paris photo) is never cropped */
+	background-position: center bottom;
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding-top: 0;
