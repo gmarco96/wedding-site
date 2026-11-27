@@ -4252,7 +4252,7 @@ body.is-mobile.landing #footer {
 .modal-overlay {
 	position: absolute;
 	inset: 0;
-	background: rgba(0, 0, 0, 0.75);
+	background: rgba(31, 42, 30, 0.75); /* dark green backdrop */
 	cursor: pointer;
 }
 
@@ -4263,7 +4263,7 @@ body.is-mobile.landing #footer {
 	max-height: 90vh;
 	display: flex;
 	flex-direction: column;
-	background: #2e3141;
+	background: #8fa88a; /* invitation sage */
 	padding: 2.5em 2em 2em;
 	border-radius: 5px;
 	box-shadow: 0 1em 3em rgba(0, 0, 0, 0.5);
@@ -4272,6 +4272,7 @@ body.is-mobile.landing #footer {
 .modal-content h2 {
 	margin: 0 0 1em;
 	text-align: center;
+	color: #1f2a1e;
 }
 
 .modal-form {
@@ -4289,7 +4290,7 @@ body.is-mobile.landing #footer {
 	padding: 0 0.5em !important;
 	background: none !important;
 	box-shadow: none !important;
-	color: #fff !important;
+	color: #1f2a1e !important;
 	font-size: 2em;
 	line-height: 1.5;
 	height: auto;
